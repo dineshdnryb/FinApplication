@@ -46,7 +46,7 @@ const styles=StyleSheet.create({
         marginTop:verticalScale(28),
         textAlign:"center",
         color:"#52327a",
-        textDecorationLine:'underline'
+       // textDecorationLine:'underline'
     },
     verifybtn:{
         backgroundColor:"#52327a",
