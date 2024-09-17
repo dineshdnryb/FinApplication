@@ -10,7 +10,7 @@ const Login=()=>{
         <View style={styles.container}>
         {/* <ImageBackground style={styles.bg} source={require("../pics/app_bg.jpeg")}>  */}
         <View >
-            <Text style={styles.appname}>Fin</Text>
+            <Text style={styles.appname}>Minty</Text>
             <Text style={styles.slogan}>Building your wealth ,Together</Text>
             
             <View style={styles.phfield}>
@@ -47,10 +47,11 @@ const styles=StyleSheet.create({
     //     backgroundColor:'rgba(0,0,0,0.8)'
     // },
     appname:{
-        color:"#000",
+        color:"#483248",
         fontSize:RFValue(35,685),
         marginTop:verticalScale(58),
         marginLeft:moderateScale(25),
+        fontWeight:"bold"
     },
     slogan:{
         color:"#000",

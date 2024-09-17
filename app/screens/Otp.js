@@ -7,9 +7,9 @@ const Otp=()=>{
     return(
         <View style={styles.container}>
         <Text style={styles.otpheading}>Enter OTP sent to your mobile</Text>
-        <OTPTextView tintColor={"grey"} offTintColor={"#52327a"} inputCount={4} containerStyle={styles.otpcontainer} textInputStyle={styles.otpfield}/>
+        <OTPTextView tintColor={"grey"} offTintColor={"#52327a"} inputCount={6} containerStyle={styles.otpcontainer} textInputStyle={styles.otpfield}/>
         <TouchableOpacity>
-            <Text style={styles.resendtext}>Resend OTP</Text>
+            <Text style={styles.resendtext}>Didn't got OTP? Resend OTP</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.verifybtn}>
             <Text style={styles.verifytext}>Verify</Text>
@@ -34,8 +34,8 @@ const styles=StyleSheet.create({
     },
     otpfield:{
         borderWidth:1.5,
-        height:verticalScale(45),
-        width:scale(45),
+        height:verticalScale(35),
+        width:scale(35),
         borderRadius:15,
         fontSize:RFValue(25,680),
         textAlign:'center',
@@ -46,6 +46,7 @@ const styles=StyleSheet.create({
         marginTop:verticalScale(28),
         textAlign:"center",
         color:"#52327a",
+        alignSelf:"center"
        // textDecorationLine:'underline'
     },
     verifybtn:{
