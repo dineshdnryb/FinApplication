@@ -6,7 +6,7 @@ import { scale, verticalScale } from 'react-native-size-matters';
 
 const Inputfield = ({title}) => {
   const [text, setText] = React.useState('');
-
+  
   return (
     <TextInput
     contentStyle={styles.st1}
@@ -14,19 +14,25 @@ const Inputfield = ({title}) => {
         style={styles.inputs}
       mode="outlined"
       label={title}
-    />
+      theme={{
+        colors: {
+            primary: '#39c2c8',
+            underlineColor: 'transparent',
+            background: '#ffffff'
+        },
+    }} />
   );
 };
 const styles=StyleSheet.create(
     {
         inputs:{
-            marginHorizontal:scale(25),
+            // marginHorizontal:scale(28),
             fontSize:RFValue(18,680),
-            height:verticalScale(50),
-            marginBottom:10
+            height:verticalScale(40),
+            marginBottom:25,
         },
         borderst:{
-            borderRadius:10,
+            borderRadius:6,
         },
         
         

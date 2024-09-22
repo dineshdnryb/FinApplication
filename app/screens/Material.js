@@ -16,11 +16,11 @@ const Material=({placeh,title})=>{
 const styles=StyleSheet.create({
 input:{
     borderWidth:1.2,
-    marginTop:moderateScale(8),
+    // marginTop:moderateScale(8),
     borderRadius:20,
-    marginHorizontal:verticalScale(25),
-    paddingVertical:verticalScale(8),
-    paddingHorizontal:scale(15),
+    // marginHorizontal:verticalScale(25),
+    // paddingVertical:verticalScale(8),
+    // paddingHorizontal:scale(15),
     fontSize:RFValue(17,680)
 },
 lable:{

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { RFValue } from "react-native-responsive-fontsize";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { verticalScale } from "react-native-size-matters";
+import { Searchbar } from 'react-native-paper';
 
 const SearchBar = ({onSearch}) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,19 +17,11 @@ const SearchBar = ({onSearch}) => {
 
   return (
     <View style={styles.container}>
-        <View style={styles.searchContainer}>
-            <Icon name="search" size={25} color="#888" style={styles.icon} />
-            <TextInput
-            style={styles.searchInput}
-            placeholder="Search..."
-            value={searchTerm}
-            onChangeText={handlesearch} />
-            {searchTerm.length > 0 && (
-            <TouchableOpacity onPress={clearSearch}>
-                <Icon name="close" size={25} color="#888" />
-            </TouchableOpacity>
-            )}
-        </View>
+        <Searchbar mode='bar'
+      placeholder="Search" showDivider={true}
+      onChangeText={handlesearch}
+      value={searchTerm} style={[styles.searchBar,styles.shadowProp]}
+    />
     </View>
   );
 };
@@ -39,39 +30,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    marginTop: verticalScale(20)
   },
-  searchContainer: {
-    marginTop:verticalScale(15),
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 6,
-    backgroundColor: '#ffffff',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5, 
-    },
-    shadowOpacity: 0.9,
-    shadowRadius: 10, 
-    elevation: 3, 
-    margin: 1,
-    paddingHorizontal: 10,
+  searchBar:{
+      backgroundColor:'#f8f8f8',
+      borderColor:'#f8f8f8',
+      borderWidth:1,
   },
-  searchInput: {
-    flex: 1,
-    height: 50,
-    paddingHorizontal: 10,
-    fontSize:RFValue(16,680),
-
+  shadowProp: {
+    shadowColor: '#666',
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 3,
+    elevation: 20,
   },
-  icon: {
-    marginRight: 10,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-  },
- 
 });
 
 export default SearchBar;

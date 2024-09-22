@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RFValue } from "react-native-responsive-fontsize";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +18,7 @@ export default function Customer() {
                     style={[styles.button,styles.activeButton]}
                     onPress={() => setFilter('Total')}>
                     <View style={styles.cardOut}>
-                        <Icon name="list-alt" size={40} color='#fff' />
+                        <Icon name="card-account-details-outline" size={40} color='#fff' />
                         <Text style={styles.buttonText}>Total</Text>
                     </View>
                     <View style={styles.cardOut}>
@@ -29,7 +29,7 @@ export default function Customer() {
                     style={[styles.button,styles.activeComplete]}
                     onPress={() => setFilter('Complete')}>
                     <View style={styles.cardOut}>
-                        <Icon name="check-circle-outline" size={40} color='#fff' />
+                        <Icon name="cash-check" size={40} color='#fff' />
                         <Text style={styles.buttonText}>Complete</Text>
                     </View>
                     <View style={styles.cardOut}>
@@ -40,7 +40,7 @@ export default function Customer() {
                     style={[styles.button,styles.activePending]}
                     onPress={() => setFilter('Pending')}>
                     <View style={styles.cardOut}>
-                        <Icon name="access-time" size={35} color='#fff' />
+                        <Icon name="clock-outline" size={35} color='#fff' />
                         <Text style={styles.buttonText}>Pending</Text>
                     </View>
                     <View style={styles.cardOut}>

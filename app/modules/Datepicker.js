@@ -4,38 +4,26 @@ import moment from 'moment';
 import { RFValue } from "react-native-responsive-fontsize";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import DateTimePicker from 'react-native-ui-datepicker';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import dayjs from 'dayjs';
 
 const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
     const [selectedDate, setSelectedDate] = useState(null);
-    const [date, setDate] = useState();
+    const [date, setDate] = useState(dayjs());
     const [showPicker, setShowPicker] = useState(false);
-    const [filterDatevalue, setfilterDatevalue] = useState(new Date());
+
+    
     useEffect(() => {
         if (reset) {
-            setSelectedDate(null);
-            onDateSelect(null);
+            // setSelectedDate(null);
+            // onDateSelect(null);
             setReset(false);
         }
     }, [reset]);
 
-    const handleDateChange = (event, selectedDate) => {
-        if (event.type === 'set' && selectedDate) {
-            const formattedDate = moment(selectedDate).format('YYYY-MM-DD');
-            setDates(prevDates => {
-                if (prevDates.includes(formattedDate)) {
-                    return prevDates.filter(d => d !== formattedDate);
-                }
-                return [...prevDates, formattedDate];
-            });
-        }
-        setShowPicker(false);
-    };
-
     const togglePicker = () => {
         setShowPicker(!showPicker);
     };
-
 
     const generateDates = () => {
         const dates = [];
@@ -51,6 +39,12 @@ const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
         setSelectedDate(date);
         onDateSelect(date);
     };
+
+    const handleDateChange = (selectedDate) => {
+        setDate(selectedDate);
+        // onDateSelect(selectedDate);
+        // setShowPicker(false); 
+      };
 
     const renderItem = ({ item }) => {
         const isSelected = item.isSame(selectedDate, 'day');
@@ -71,7 +65,7 @@ const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
 
     return (
         <View style={styles.container}>
-            {currentDate && (
+            {currentDate &&(
                 <FlatList
                     data={dates}
                     horizontal
@@ -80,12 +74,10 @@ const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
                     showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.listContainer, { marginTop: verticalScale(20), }]}
                 />
             )}
-
             {!currentDate && (
                 <TouchableOpacity onPress={togglePicker} style={styles.filterBtn}>
-                    <Icon name="funnel-outline" size={20} color="#000" />
+                    <Icon name="calendar-search" size={30} color="#000" />
                 </TouchableOpacity>
-                
             )}
             {selectedDate && (
                 <Text style={styles.filterDate}>
@@ -95,9 +87,8 @@ const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
             <Modal transparent={true} animationType="fade" visible={showPicker} onRequestClose={togglePicker} >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <DateTimePicker value={filterDatevalue}
-                            mode="date"
-                            onChange={handleDateChange}
+                        <DateTimePicker date={date}
+                            mode="single" onChange={(params) => handleDateChange(params.date)}
                         />
                         <TouchableOpacity onPress={togglePicker} style={styles.closeButton}>
                             <Text style={styles.closeButtonText}>Close</Text>
@@ -120,14 +111,14 @@ const styles = StyleSheet.create({
     dateItem: {
         padding: 10,
         alignItems: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#ddd',
     },
     selectedDate: {
-        backgroundColor: '#007bff',
-        borderColor: '#007bff',
+        backgroundColor: '#39c2c8',
+        borderColor: '#39c2c8',
     },
     dateText: {
         fontSize: RFValue(13, 780),

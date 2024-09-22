@@ -1,162 +1,152 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View,ScrollView } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { TextInput } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
-const Login=()=>{
-    const navigation=useNavigation();
+const Login = () => {
+    const navigation = useNavigation();
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handlepage = () => {
+        navigation.navigate("Userdetails");
+    };
     const showAlert = () => {
         Alert.alert(
-          "Alert Title",
-          "Alert Message",
-          [
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-          ]
+            "Alert Title",
+            "Alert Message",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
         );
-      };
+    };
+
     const handlePress = () => {
         if (phoneNumber.length === 10) {
             navigation.navigate("Otpscreen");
         } else {
             showAlert();
-        }  
+        }
     };
-    return(
+    return (
         <View style={styles.container}>
-<<<<<<< HEAD
-        {/* <ImageBackground style={styles.bg} source={require("../pics/app_bg.jpeg")}>  */}
-        <View >
-=======
             <View style={styles.containertwo}>
->>>>>>> fb14343acd7c87d79726fe3d39def0d9ec8579e9
-            <Text style={styles.appname}>Minty</Text>
-            <Text style={styles.slogan}>Building your wealth ,Together</Text>
-                {/* <Text style={styles.slogan}>Login</Text> */}
-                <Text style={styles.content}>By entering a valid phone number,you can easily log in and get access</Text>
-                <View style={styles.phfield}>
-            <Text style={styles.phnofield} >+91 |</Text>
-            <TextInput keyboardType="numeric" onChangeText={setPhoneNumber} maxLength={10} style={[styles.mobilenofield, { outlineStyle: 'none' }]} placeholderTextColor={"grey"} placeholder="Enter Phone Number" ></TextInput>
+                <Text style={styles.appname}>Login</Text>
+                <Text style={styles.content}>By entering a registered phone number,you can easily log in and get access</Text>
+                <TextInput style={styles.phfield} mode="outlined" label="Enter Mobile Number" keyboardType="phone-pad" onChangeText={setPhoneNumber} maxLength={10} left={<TextInput.Affix text="+91" />}
+                    theme={{
+                        colors: {
+                            primary: '#39c2c8',
+                            underlineColor: 'transparent',
+                            background: '#ffffff'
+                        },
+                    }} outlineStyle={styles.borderst} />
+                <Button buttonColor='#39c2c8' style={styles.continuebtn} labelStyle={styles.continuetext} loading={loading} mode="contained" onPress={handlePress}>Get OTP</Button>
             </View>
-            <TouchableOpacity onPress={handlePress} style={styles.continuebtn}>
-                <Text style={styles.continuetext}>Get OTP</Text>
-            </TouchableOpacity>
-            </View>
-           
+
             <View style={styles.termssection}>
-                <Text style={styles.continuingtext}>By continuing,you agree to our</Text>
                 <View style={styles.termspolicydiv}>
-                <Text style={styles.terms} >Terms of Use</Text>
-                <Text style={styles.and} > & </Text>
-                <Text style={styles.policy} >Privacy Policy</Text>
+                    <Text style={styles.continuingtext} >Don't have an account?</Text>
+                    <Text style={styles.and} >  </Text>
+                    <TouchableOpacity onPress={handlepage} >
+                        <Text style={styles.policy}>Register</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
     )
 }
-const styles=StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:"#fff",
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
         width: '100%',
         flex: 3,
         justifyContent: 'space-between',
-        paddingHorizontal:20,
+        paddingHorizontal: 20,
     },
 
     containertwo: {
-      height: '60%',    
-      justifyContent: 'center',
+        height: '60%',
+        justifyContent: 'center',
     },
-   
-    appname:{
-        color:"#483248",
-        fontSize:RFValue(35,685),
-<<<<<<< HEAD
-        marginTop:verticalScale(58),
-        marginLeft:moderateScale(25),
-        fontWeight:"bold"
-=======
-    },
-    content:{
-        color:"#000",
-        fontSize:RFValue(15,685),
-        marginTop:verticalScale(20),
 
->>>>>>> fb14343acd7c87d79726fe3d39def0d9ec8579e9
+    appname: {
+        color: "#483248",
+        fontSize: RFValue(35, 685),
+        // marginTop: verticalScale(58),
+        fontWeight: "bold"
     },
-    slogan:{
-        color:"#000",
-        fontSize:RFValue(25,900),
-        marginTop:verticalScale(10),
+    content: {
+        color: "#000",
+        fontSize: RFValue(15, 685),
+        marginTop: verticalScale(20),
+
     },
-    phfield:{
-        display:'flex',
-        flexDirection:'row',
-        backgroundColor:'#fff',
-        // marginHorizontal:scale(25),
-        marginTop:verticalScale(20),
-        borderRadius:15,
-        paddingVertical:verticalScale(12),
-        borderWidth:1,
-        width: '100%'
+    slogan: {
+        color: "#000",
+        fontSize: RFValue(25, 900),
+        marginTop: verticalScale(10),
     },
-    mobilenofield:{
-        paddingLeft:moderateScale(10),
-        fontSize:RFValue(16,680),
-        color:"#000",
+    phfield: {
+        marginTop: verticalScale(20),
     },
-    phnofield:{
-        alignSelf:'center',
-        paddingLeft:scale(10),
-        fontSize:RFValue(16,680),
-        color:"#000",
-        fontWeight:'500'
+
+    borderst: {
+
     },
-    continuebtn:{
-        backgroundColor:"#39c2c8",
-        width: '100%',
-        borderRadius:15,
-        marginTop:verticalScale(22),
-        alignItems:'center',
-        alignSelf:'center',
+    mobilenofield: {
+        paddingLeft: moderateScale(10),
+        fontSize: RFValue(16, 680),
+        color: "#000",
     },
-    continuetext:{
-        paddingVertical:9,
-        fontSize:RFValue(16,680),
-        color:"#ffffff",
-        fontWeight:"bold"
+    phnofield: {
+        alignSelf: 'center',
+        paddingLeft: scale(10),
+        fontSize: RFValue(16, 680),
+        color: "#000",
+        fontWeight: '500'
     },
-   
-    continuingtext:{
-        fontSize:RFValue(16,680),
-        color:"#000",
+    continuebtn: {
+        borderRadius: 6,
+        marginTop: verticalScale(22),
+        height: 50,
+        justifyContent:'center',
     },
-    termspolicydiv:{
-        display:'flex',
-        flexDirection:'row',
-        alignSelf:'center'
+    continuetext: {
+        fontSize: RFValue(14, 580),
+        color: "#ffffff",
     },
-    terms:{
-        color:"#39c2c8",
-        fontSize:RFValue(14,680),
-        fontWeight:'bold'
+
+    continuingtext: {
+        fontSize: RFValue(16, 680),
+        color: "#000",
     },
-    and:{
-        color:"#000",
-        fontSize:RFValue(14,680),
+    termspolicydiv: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignSelf: 'center'
     },
-    policy:{
-        color:"#39c2c8",
-        fontSize:RFValue(14,680),
-        fontWeight:'bold',
+    terms: {
+        color: "#39c2c8",
+        fontSize: RFValue(14, 680),
+        fontWeight: 'bold'
     },
-    termssection:{
-        // flex: 1,
-        marginBottom:verticalScale(42),
-        alignSelf:'center',
-        justifyContent:'end'
+    and: {
+        color: "#000",
+        fontSize: RFValue(14, 680),
+    },
+    policy: {
+        color: "#39c2c8",
+        fontSize: RFValue(14, 580),
+    },
+    termssection: {
+        marginBottom: verticalScale(42),
+        alignSelf: 'center',
+        justifyContent: 'end'
     }
 })
 export default Login;

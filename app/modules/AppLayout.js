@@ -4,7 +4,7 @@ import Home from './Home';
 import Customer from './Customer';
 import Employer from './Employer';
 import Profile from './Profile';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Import icons
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ const CustomHeader = () => (
     </TouchableOpacity>
     {/* <Text style={styles.headerTitle}>Your App</Text> */}
     <TouchableOpacity onPress={() => console.log('Notification clicked')}>
-      <Icon name="notifications" size={24} color="#888888" />
+      <Icon name="bell-outline" size={28} color="#000" />
     </TouchableOpacity>
   </View>
   );
@@ -30,7 +30,7 @@ export default function AppLayout() {
           backgroundColor: '#ffffff', 
           borderTopColor: '#e0e0e0',
           borderTopWidth: 1,
-          height: 70, 
+          height: 60, 
           borderRadius:0,
         },
         tabBarLabelStyle: {
@@ -40,7 +40,7 @@ export default function AppLayout() {
           marginBottom: 0, 
         },
         tabBarActiveTintColor: '#39c2c8',  
-        tabBarInactiveTintColor: '#888888', 
+        tabBarInactiveTintColor: '#000', 
       }}
     >
       <Tab.Screen
@@ -57,17 +57,29 @@ export default function AppLayout() {
         component={Customer}
         options={{
           tabBarIcon: ({ color, size,focused }) => (
-            <Icon name="person" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
+            <Icon name="account-group" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
           ),
         }}
       />
        
+       <Tab.Screen
+        name="Plus"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color, size ,focused}) => (
+            <Icon name="plus-circle" color={color} size={50}  style={{ transform: [{ scale: focused ? 1.2 : 1 }]  }}/>
+            
+          ),
+        }}
+        
+      />
+
       <Tab.Screen
         name="Employer"
         component={Employer}
         options={{
           tabBarIcon: ({ color, size,focused }) => (
-            <Icon name="work" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
+            <Icon name="account-network" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
           ),
         }}
       />
@@ -76,7 +88,7 @@ export default function AppLayout() {
         component={Profile}
         options={{
           tabBarIcon: ({ color, size ,focused}) => (
-            <Icon name="person-outline" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
+            <Icon name="account-circle" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
           ),
         }}
       />
@@ -88,12 +100,13 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     backgroundColor: '#ffffff',
     paddingHorizontal: 16,
-    height: 60,
+    height: 90,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+    paddingBottom:18,
 
   },
   headerImage: {
