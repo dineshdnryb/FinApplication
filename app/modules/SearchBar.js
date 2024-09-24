@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { verticalScale } from "react-native-size-matters";
 import { Searchbar } from 'react-native-paper';
 
-const SearchBar = ({onSearch}) => {
+const SearchBar = ({ onSearch, reset }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  
+
+  useEffect(() => {
+    if (reset) {
+      setSearchTerm('');
+    }
+  }, [reset]);
+
   const handlesearch = (data) => {
     setSearchTerm(data);
     onSearch(data)
-  }; 
-  
+  };
+
   const clearSearch = () => {
     setSearchTerm('');
   };
 
   return (
     <View style={styles.container}>
-        <Searchbar mode='bar'
-      placeholder="Search" showDivider={true}
-      onChangeText={handlesearch}
-      value={searchTerm} style={[styles.searchBar,styles.shadowProp]}
-    />
+      <Searchbar mode='bar'
+        placeholder="Search" showDivider={true}
+        onChangeText={handlesearch}
+        value={searchTerm} style={[styles.searchBar, styles.shadowProp]}
+      />
     </View>
   );
 };
@@ -32,14 +38,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: verticalScale(20)
   },
-  searchBar:{
-      backgroundColor:'#f8f8f8',
-      borderColor:'#f8f8f8',
-      borderWidth:1,
+  searchBar: {
+    backgroundColor: '#f8f8f8',
+    borderColor: '#f8f8f8',
+    borderWidth: 1,
   },
   shadowProp: {
     shadowColor: '#666',
-    shadowOffset: {width: 0, height: 0},
+    shadowOffset: { width: 0, height: 0 },
     shadowRadius: 3,
     elevation: 20,
   },

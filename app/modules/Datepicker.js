@@ -1,50 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
-import { RFValue } from "react-native-responsive-fontsize";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import DateTimePicker from 'react-native-ui-datepicker';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { verticalScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import dayjs from 'dayjs';
+import { Button } from 'react-native-paper';
 
-const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
+const FilterDate = ({ onDateSelect, reset, setReset }) => {
     const [selectedDate, setSelectedDate] = useState(null);
-    const [date, setDate] = useState(dayjs());
-    const [showPicker, setShowPicker] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedYear, setSelectedYear] = useState(moment().year());
+    const [selectedMonth, setSelectedMonth] = useState(moment().month());
 
-    
     useEffect(() => {
         if (reset) {
-            // setSelectedDate(null);
-            // onDateSelect(null);
+            setSelectedDate(null);
+            onDateSelect(null);
             setReset(false);
         }
     }, [reset]);
 
-    const togglePicker = () => {
-        setShowPicker(!showPicker);
-    };
-
-    const generateDates = () => {
+    const generateMonthDates = (year, month) => {
         const dates = [];
-        for (let i = -2; i <= 10; i++) {
-            dates.push(moment().add(i, 'days'));
+        const startDate = moment().year(year).month(month).date(1);
+        const daysInMonth = startDate.daysInMonth();
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            dates.push(startDate.clone().date(day));
         }
         return dates;
     };
 
-    const dates = generateDates();
+    const dates = generateMonthDates(selectedYear, selectedMonth);
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
         onDateSelect(date);
     };
-
-    const handleDateChange = (selectedDate) => {
-        setDate(selectedDate);
-        // onDateSelect(selectedDate);
-        // setShowPicker(false); 
-      };
 
     const renderItem = ({ item }) => {
         const isSelected = item.isSame(selectedDate, 'day');
@@ -63,39 +55,86 @@ const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
         );
     };
 
+    // Generate year options from 2000 to current year + 2
+    const yearOptions = Array.from({ length: moment().year() + 2 - 2000 + 1 }, (_, i) => 2000 + i);
+
     return (
         <View style={styles.container}>
-            {currentDate &&(
-                <FlatList
-                    data={dates}
-                    horizontal
-                    keyExtractor={(item) => item.toString()}
-                    renderItem={renderItem}
-                    showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.listContainer, { marginTop: verticalScale(20), }]}
-                />
-            )}
-            {!currentDate && (
-                <TouchableOpacity onPress={togglePicker} style={styles.filterBtn}>
-                    <Icon name="calendar-search" size={30} color="#000" />
-                </TouchableOpacity>
-            )}
-            {selectedDate && (
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                 <Text style={styles.filterDate}>
-                    Filter Date: {selectedDate.format('DD-MM-YYYY')}
+                    Calender: {selectedMonth + 1}/{selectedYear}
                 </Text>
-            )}
-            <Modal transparent={true} animationType="fade" visible={showPicker} onRequestClose={togglePicker} >
+                <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => setModalVisible(true)}>
+                    <Icon name="calendar-edit" size={24} />
+                </TouchableOpacity>
+            </View>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <DateTimePicker date={date}
-                            mode="single" onChange={(params) => handleDateChange(params.date)}
-                        />
-                        <TouchableOpacity onPress={togglePicker} style={styles.closeButton}>
-                            <Text style={styles.closeButtonText}>Close</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.modalTitle}>Select Year and Month</Text>
+                        <View style={styles.selectorContainer}>
+                            <View style={styles.yearMonthContainer}>
+                                <Text>Year</Text>
+                                <FlatList
+                                    data={yearOptions}
+                                    horizontal showsHorizontalScrollIndicator={false}
+                                    renderItem={({ item }) => (
+                                        <TouchableOpacity
+                                            onPress={() => setSelectedYear(item)}
+                                            style={[
+                                                styles.yearMonthItem,
+                                                item === selectedYear && styles.selectedYearMonthItem,
+                                            ]}
+                                        >
+                                            <Text style={[
+                                                item === selectedYear && styles.selectedText,
+                                            ]}>{item}</Text>
+                                        </TouchableOpacity>
+                                    )}
+                                    keyExtractor={(item) => item.toString()}
+                                />
+                            </View>
+                            <View style={styles.yearMonthContainer}>
+                                <Text>Month</Text>
+                                <FlatList showsHorizontalScrollIndicator={false}
+                                    data={moment.months()}
+                                    horizontal
+                                    renderItem={({ item, index }) => (
+                                        <TouchableOpacity
+                                            onPress={() => setSelectedMonth(index)}
+                                            style={[
+                                                styles.yearMonthItem,
+                                                index === selectedMonth && styles.selectedYearMonthItem,
+                                            ]}
+                                        >
+                                            <Text style={[
+                                                index === selectedMonth && styles.selectedText,
+                                            ]}>{item}</Text>
+                                        </TouchableOpacity>
+                                    )}
+                                    keyExtractor={(item) => item}
+                                />
+                            </View>
+                        </View>
+                        <Button buttonColor='#39c2c8' mode="contained" onPress={() => setModalVisible(false)}  >Generate Calender</Button>
                     </View>
                 </View>
             </Modal>
+
+            <FlatList
+                data={dates}
+                horizontal
+                keyExtractor={(item) => item.toString()}
+                renderItem={renderItem}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={[styles.listContainer, { marginTop: verticalScale(20) }]}
+            />
         </View>
     );
 };
@@ -103,10 +142,6 @@ const FilterDate = ({ onDateSelect, reset, setReset, currentDate }) => {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-
-    },
-    listContainer: {
-        // paddingHorizontal: 10,
     },
     dateItem: {
         padding: 10,
@@ -128,9 +163,8 @@ const styles = StyleSheet.create({
         fontSize: RFValue(13, 580),
     },
     selectedDateText: {
-        color: '#ffffff'
+        color: '#ffffff',
     },
-
     filterDate: {
         color: '#000',
         marginTop: verticalScale(15),
@@ -139,47 +173,40 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        width: '80%',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         padding: 20,
+        marginHorizontal: 20,
         borderRadius: 10,
     },
-    title: {
-        fontSize: 20,
-        marginBottom: 10,
+    modalTitle: {
+        fontSize: RFValue(18, 780),
+        marginBottom: 20,
+        textAlign: 'center',
     },
-    closeButton: {
-        backgroundColor: '#007bff',
+    selectorContainer: {
+        marginBottom: 20,
+    },
+    yearMonthContainer: {
+        flexDirection: 'column',
+        marginVertical: 10,
+    },
+    yearMonthItem: {
         padding: 10,
+        marginHorizontal: 5,
         borderRadius: 5,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    closeButtonText: {
-        color: 'white',
-    },
-    selectedDatesTitle: {
-        marginTop: 20,
-        fontWeight: 'bold',
-    },
-    dateText: {
-        marginVertical: 2,
-    },
-    filterBtn: {
         borderWidth: 1,
         borderColor: '#ddd',
-        flexDirection: 'row', 
-        padding: 6,
-        borderRadius: 4,
-        overflow: 'hidden',
-        backgroundColor: '#ffffff',
-        shadowColor: '#000',
-    
-    }
+    },
+    selectedYearMonthItem: {
+        backgroundColor: '#39c2c8',
+        borderColor: '#39c2c8',
+    },
+    selectedText: {
+        color: '#ffffff',
+    },
 });
 
 export default FilterDate;

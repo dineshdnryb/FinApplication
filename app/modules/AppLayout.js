@@ -6,6 +6,8 @@ import Employer from './Employer';
 import Profile from './Profile';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import Customerprofile from './Customerprofile';
+import { FAB } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 const CustomHeader = () => (
@@ -64,11 +66,11 @@ export default function AppLayout() {
        
        <Tab.Screen
         name="Plus"
-        component={Home}
+        component={Customerprofile}
         options={{
           tabBarIcon: ({ color, size ,focused}) => (
-            <Icon name="plus-circle" color={color} size={50}  style={{ transform: [{ scale: focused ? 1.2 : 1 }]  }}/>
-            
+            // <Icon name="plus-circle" color={color} size={50}  style={{ transform: [{ scale: focused ? 1.2 : 1 }]  }}/>
+            <FAB icon="plus" color="#ffffff" mode='elevated' size="medium" style={styles.fab} />
           ),
         }}
         
@@ -79,7 +81,7 @@ export default function AppLayout() {
         component={Employer}
         options={{
           tabBarIcon: ({ color, size,focused }) => (
-            <Icon name="account-network" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
+            <Icon name="briefcase-account" color={color} size={30}  style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}/>
           ),
         }}
       />
@@ -117,4 +119,9 @@ const styles = StyleSheet.create({
     color: '#0eb9b3',
     fontSize: 18,
   },
+  fab:{
+    // position:'absolute',
+    borderRadius:50,
+    backgroundColor:'#39c2c8',
+  }
 });

@@ -43,7 +43,7 @@ const Login = () => {
                             underlineColor: 'transparent',
                             background: '#ffffff'
                         },
-                    }} outlineStyle={styles.borderst} />
+                    }} />
                 <Button buttonColor='#39c2c8' style={styles.continuebtn} labelStyle={styles.continuetext} loading={loading} mode="contained" onPress={handlePress}>Get OTP</Button>
             </View>
 
@@ -93,10 +93,6 @@ const styles = StyleSheet.create({
     },
     phfield: {
         marginTop: verticalScale(20),
-    },
-
-    borderst: {
-
     },
     mobilenofield: {
         paddingLeft: moderateScale(10),

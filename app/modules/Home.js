@@ -1,92 +1,97 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RFValue } from "react-native-responsive-fontsize";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Collection from './Collection';
+import ServicePage from './ServicePage';
 
 export default function Home() {
 
-    return (
-        <ScrollView style={styles.Container}>
-          <View style={styles.card} >
-              <View style={styles.content}>
-                <View style={styles.textContainer}>
-                  <Text style={styles.date}>12-09-2024</Text>
-                  <Text style={styles.collection}>Collection: </Text>
-                </View>
-                <View style={styles.loanDetails}>
-                  <Text style={styles.collection}>Loan:</Text>
-                  <Text style={styles.collection}>Expenses: </Text>
-                </View>
-              </View>
-           </View>
-           <View style={styles.serviceContainer}>
-               <Text style={styles.servicetitle}>Services</Text>
-           </View>
-            <View style={styles.serviceContainer}>
-               <Text style={styles.servicetitle}>Collection</Text>
-               <Collection/>
-           </View>
-            <View style={styles.serviceContainer}>
-               <Text style={styles.servicetitle}>Collection Details</Text>
-               <Collection/>
-           </View>
-            <View style={styles.serviceContainer}>
-               <Text style={styles.servicetitle}>Collection Details</Text>
-               <Collection/>
+  return (
+    <ScrollView style={styles.Container}>
+      <View style={{marginBottom: verticalScale(30)}}>
+        <View style={styles.card} elevation={4}>
+          <View style={styles.content}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Text style={{ fontSize: RFValue(13, 500), color: '#ffffff', fontWeight: '600' }}>Hi! Name</Text>
+              <Text style={styles.date}>20/02/2023</Text>
+            </View>
+            <View style={styles.loanDetails}>
+              <Text style={styles.titleText}>Total Loan Amount</Text>
+              <Text style={styles.amountText}><Icon name="currency-inr" size={20}></Icon>3,30,330</Text>
+            </View>
+            <View style={styles.loanDetails}>
+              <Text style={styles.titleText}>Total Collection</Text>
+              <Text style={styles.amountText}><Icon name="currency-inr" size={20}></Icon>3,30,330</Text>
+            </View>
+            <View style={styles.loanDetails}>
+              <Text style={styles.titleText}>Today's Collection</Text>
+              <Text style={styles.amountText}>2/10</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.serviceContainer}>
+          <Text style={styles.servicetitle}>Services</Text>
+           <ServicePage />
+        </View>
+        <View style={styles.serviceContainer}>
+          <Text style={styles.servicetitle}>Collection</Text>
+          <Collection />
+        </View>
       </View>
-        </ScrollView> 
-    );
-        
+    </ScrollView>
+  );
+
 }
 
-const styles = StyleSheet.create({ 
-  Container:{
-    backgroundColor:'#ffffff',
-    padding: 10,
+const styles = StyleSheet.create({
+  Container: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 12,
+    paddingVertical: 30,
   },
   card: {
-    borderRadius: 4,
+    borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: '#39c2c8',
     shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 2, 
-    borderWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row', 
-    padding: 10,
-  },
-  content:{
-     width:'100%',
-  },
-  loanDetails:{
+    borderColor: '#39c2c8',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    padding: 10,
+    margin: 1,
+    marginTop: verticalScale(15),
+  },
+  content: {
+    width: '100%',
+  },
+  loanDetails: {
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   },
 
-  date:{
-    color:'#ffffff',
-    fontSize:RFValue(13,480),
-    marginTop:verticalScale(10),
-  },
-  
-  collection:{
-    color:'#ffffff',
-    marginTop:verticalScale(10),
-    fontSize:RFValue(12,480),
-
-  },
-  serviceContainer:{
-    marginTop:verticalScale(30),
-    
+  date: {
+    color: '#ffffff',
+    fontSize: RFValue(16, 800),
   },
 
-  servicetitle:{
-    color:'#000',
-    fontSize: RFValue(12,420),
+  titleText: {
+    color: '#ffffff',
+    marginTop: verticalScale(10),
+    fontSize: RFValue(12, 680),
+  },
+  serviceContainer: {
+    marginTop: verticalScale(30),
+
+  },
+  amountText: {
+    marginTop: verticalScale(4),
+    fontSize: RFValue(13, 500),
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  servicetitle: {
+    color: '#000',
+    fontSize: RFValue(12, 420),
   }
 })
